@@ -1,0 +1,23 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>L's CeroSnapshot</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    </head>
+    <body>
+        <b>@message</b>
+        @for article in articles
+        <div>
+            <b>@article.title</b> <br />
+            @article.text
+        </div>
+        @end
+        <br />
+        Made with ♥ with <a href="https://github.com/vlang/v"><img style="height: 1em;" src="https://vlang.io/img/v-logo.png" />lang.io</a>
+    </body>
+</html>
