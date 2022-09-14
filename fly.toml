@@ -7,9 +7,12 @@ kill_timeout = 5
 processes = []
 
 [env]
-# TODO: use volume https://fly.io/docs/reference/volumes/
-DB_PATH = ":memory:"
+DB_PATH = "/data/prod.sqlite3"
 WEB_HOST = "0.0.0.0"
+
+[mounts]
+source="cerosnapshot_data"
+destination="/data"
 
 [experimental]
   allowed_public_ports = []
