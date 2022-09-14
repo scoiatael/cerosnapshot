@@ -53,8 +53,9 @@ pub fn (mut app App) new_friend(name string) ?vweb.Result {
 
 	// I do hope no one lives in Sao Tome ;)
 	if lon > 0 && lat > 0 {
-		lat += rand.f64()
-		lon += rand.f64()
+		// add some random noise to offset IP geolocation being concentrated in provider locations
+		lat += rand.f64()*0.6-0.3
+		lon += rand.f64()*0.6-0.3
 	}
 
 	friend := Friend{
