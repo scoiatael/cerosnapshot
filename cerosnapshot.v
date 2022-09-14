@@ -73,7 +73,7 @@ pub fn (mut app App) new_friend(name string) ?vweb.Result {
 ['/friends']
 pub fn (mut app App) friends() vweb.Result {
 	friends := app.find_all_friends()
-	located_friends := friends.filter(it.lon > 0 && it.lat > 0)
+	located_friends := friends.filter(it.lon != 0 && it.lat != 0)
 	visitors := friends.map(it.name).join(", ")
 	myself := Friend {
 		name: "myself"
