@@ -5,6 +5,7 @@ import sqlite
 import net.http
 import x.json2
 import os
+import rand
 
 struct App {
 	vweb.Context
@@ -19,23 +20,9 @@ fn main() {
 	}
 
 	sql app.db {
-		create table Article
+		create table Friend
 	}
 
-	first_article := Article{
-		title: 'Hello, world!'
-		text: 'V is great.'
-	}
-
-	second_article := Article{
-		title: 'Second post.'
-		text: 'Hm... what should I write about?'
-	}
-
-	sql app.db {
-		insert first_article into Article
-		insert second_article into Article
-	}
 	vweb.run_at(app, vweb.RunParams{
 		port: 8081,
 		host: os.getenv("WEB_HOST")
@@ -45,15 +32,52 @@ fn main() {
 
 ['/index']
 pub fn (mut app App) index() ?vweb.Result {
+	return $vweb.html()
+}
+
+[post]
+pub fn (mut app App) new_friend(name string) ?vweb.Result {
+	if name == '' {
+		return app.text('How rude.')
+	}
+
 	ip := app.ip().split(":")[0]
 	mut request := http.Request{
 		url: 'https://json.geoiplookup.io/$ip'
 		method: .get
 	}
 	result := request.do() ?
-	raw_data := json2.raw_decode(result.text) ?
-	message := 'Hello, world from Vweb!. You are from $ip We have $result.text'
+	response := json2.raw_decode(result.text) ?.as_map()
+	mut lon := response["longitude"] or { "" }.f64()
+	mut lat := response["latitude"] or { "" }.f64()
 
-	articles := app.find_all_articles()
+	// I do hope no one lives in Sao Tome ;)
+	if lon > 0 && lat > 0 {
+		lat += rand.f64()
+		lon += rand.f64()
+	}
+
+	friend := Friend{
+		name: name
+		lon: lon
+		lat: lat
+	}
+
+	sql app.db {
+		insert friend into Friend
+	}
+	return app.redirect('/friends')
+}
+
+['/friends']
+pub fn (mut app App) friends() vweb.Result {
+	friends := app.find_all_friends()
+	located_friends := friends.filter(it.lon > 0 && it.lat > 0)
+	visitors := friends.map(it.name).join(", ")
+	myself := Friend {
+		name: "myself"
+		lat: 51.0771
+		lon: 17.0
+	}
 	return $vweb.html()
 }

@@ -1,23 +1,33 @@
-<!doctype html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>L's CeroSnapshot</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-    </head>
-    <body>
-        <b>@message</b>
-        @for article in articles
-        <div>
-            <b>@article.title</b> <br />
-            @article.text
+<!DOCTYPE html>
+<html class="no-js" lang="en" color-mode="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>L's CeroSnapshot</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css%401.10.2/mvp.css" />
+    <style type="text/css" media="screen"></style>
+  </head>
+  <body>
+    <main>
+      <form action="/new_friend" method="post">
+        <input type="text" placeholder="Name" name="name" /> <br />
+        <div style="display: flex; justify-content: space-between">
+          <input type="submit" value="Submit" />
+          <a href="/friends">skip</a>
         </div>
-        @end
-        <br />
-        Made with ♥ with <a href="https://github.com/vlang/v"><img style="height: 1em;" src="https://vlang.io/img/v-logo.png" />lang.io</a>
-    </body>
+      </form>
+    </main>
+
+    <footer>
+      Made with ♥ with
+      <a href="https://github.com/vlang/v"
+        ><img
+          style="height: 1em"
+          src="https://vlang.io/img/v-logo.png"
+        />lang.io</a
+      >
+    </footer>
+  </body>
 </html>

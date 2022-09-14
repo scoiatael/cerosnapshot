@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" color-mode="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>L's CeroSnapshot</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet%401.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css%401.10.2/mvp.css" />
+    <style type="text/css" media="screen">
+      #map {
+        height: 540px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="map"></div>
+    </main>
+    <section>
+      <b>Visitors: </b>@visitors
+    </section>
+
+    <footer>
+      Made with ♥ with
+      <a href="https://github.com/vlang/v"
+        ><img
+          style="height: 1em"
+          src="https://vlang.io/img/v-logo.png"
+        />lang.io</a
+      >
+    </footer>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+
+    <script
+      src="https://unpkg.com/leaflet%401.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""
+    ></script>
+    <script type="text/javascript">
+      var map = L.map("map").setView([45.890008, -10.942383], 3);
+
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 12,
+        attribution: "© OpenStreetMap",
+      }).addTo(map);
+
+      var marker = L.marker([@myself.lat, @myself.lon]).addTo(map);
+      marker.bindPopup("<b>Hello world!</b><br>Come over for a beer :)").openPopup();
+
+      @for friend in located_friends
+        marker = L.marker([@friend.lat, @friend.lon]).addTo(map);
+        marker.bindPopup("@friend.name");
+      @end
+    </script>
+  </body>
+</html>

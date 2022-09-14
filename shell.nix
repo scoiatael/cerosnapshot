@@ -2,4 +2,4 @@
 
 with pkgs;
 
-mkShell { buildInputs = [ vlang sqlite flyctl ]; }
+mkShell { buildInputs = [ vlang sqlite flyctl nodePackages.prettier ]; }
